@@ -5,6 +5,7 @@ This repo bundles three things to let the frontend talk to real dev/stage APIs (
 - A local reverse proxy (`dev/proxy.ts`) that keeps calls same-origin.
 - MSW mocks you can toggle per-service when you do not need the real API.
 - An `oc` port-forward helper for the handful of cluster-only services you need.
+- Utility scripts for OpenAPI specs (strip auth, merge specs, and Prism notes).
 
 ## Setup
 
@@ -41,6 +42,12 @@ Edit `dev/services.config.ts` to match your APIs. Each entry has:
 - Edit `scripts/port-forward.sh` to list the services you need (format: `serviceName:localPort:remotePort`).
 - Run with `OC_NAMESPACE=<yournamespace> scripts/port-forward.sh`. The script backgrounds all forwards and cleans them up on exit.
 - Once a service is forwarded, point its env var to `http://localhost:<localPort>` and keep the proxy running.
+
+## OpenAPI helpers
+
+- Strip auth requirements from a spec: `npm run strip:security -- openapi.yaml` (overwrites the file).
+- Merge multiple specs before mocking: `npm run merge:specs -- spec-a.yaml spec-b.yaml --out merged.yaml`.
+- For Prism usage, see `PRISM.md`.
 
 ## Hybrid workflow
 
